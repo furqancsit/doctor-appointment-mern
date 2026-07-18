@@ -14,19 +14,20 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser())
-app.use(urlencoded())
+// app.use(urlencoded())
 
 // Connect Database
 connectDB();
 
 // Routes
-app.post("/api/v1/auth", userRouter);
-app.post("/api/v1/doctor", doctorRouter);
-app.get("/api/v1/appointment", appointmentRouter);
+app.use("/api/v1/auth", userRouter);
+app.use("/api/v1/doctor", doctorRouter);
+app.use("/api/v1/appointment", appointmentRouter);
 
 // Server Start
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+app.get("/", (req, res) => {
+    res.send("SERVER IS RUNNING")
+})
+app.listen(PORT);

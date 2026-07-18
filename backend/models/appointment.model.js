@@ -44,6 +44,22 @@ const appointmentSchema = new Schema(
             type: Number,
             default: 0,
         },
+
+        patientDetails: {
+            name: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            age: Number,
+            gender: {
+                type: String,
+                enum: ["Male", "Female", "Other"],
+            },
+            
+            phone: String,
+            email: String,
+        },
     },
     {
         timestamps: true,

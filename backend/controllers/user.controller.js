@@ -88,6 +88,7 @@ const loginUser = async (req, res) => {
                 user: {
                     _id: user._id,
                     email: user.email,
+                    role: user.role,
                 }
             })
 
@@ -117,4 +118,51 @@ const logoutUser = async (req, res) => {
 }
 
 
-export { registerUser, loginUser, logoutUser,getUserProfile }
+
+const updateProfile = async (req, res) => {
+    const { name, email } = req.body
+    if (!name && !email) {
+        return res.status(404).json({ "message": " name or email is required" })
+
+    }
+
+    const user = await User.findById(req.user.id)
+    if (!user) {
+
+        return res.status(404).json({ message: "user not found" })
+
+    }
+
+    const updatedUser = await User.findOneAndUpdate(req.user.id, { $set: { name, email } }, { new: true })
+
+
+    res.status(200).json({ updatedUser, message: "user updated" })
+
+
+}
+
+const changePassword = async (req, res) => {
+    const { oldpassword, newpassword } = req.body;
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await user.matchPassword(oldpassword);
+
+    if (!isMatch) {
+        return res.status(400).json({ message: "Old password is incorrect" });
+    }
+
+    // This triggers pre("save") hook automatically
+    user.password = newpassword;
+
+    await user.save();
+
+    return res.status(200).json({
+        message: "Password updated successfully"
+    });
+};
+export { registerUser, loginUser, logoutUser, getUserProfile, updateProfile, changePassword }
