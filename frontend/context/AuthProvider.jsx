@@ -4,47 +4,40 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+  const checkAuth = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/auth/profile", {
+        withCredentials: true,
+      });
+      
 
-    const checkAuth = async () => {
-        try {
+      setUser(data);
+    } catch (error) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            const { data } = await axios.get(
-                "/api/v1/auth/profile",
-                {
-                    withCredentials: true
-                }
-            );
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
-            setUser(data);
-
-
-
-        } catch (error) {
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        checkAuth();
-    }, []);
-
-    return (
-        <AuthContext.Provider
-            value={{
-                user,
-                setUser,
-                loading,
-                checkAuth
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        loading,
+        checkAuth,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);

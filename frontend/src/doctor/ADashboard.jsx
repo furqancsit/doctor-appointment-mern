@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 import {
   CalendarDays,
   Users,
-  Clock,
+  Clock4,
   Activity,
   CheckCircle,
   XCircle,
   AlertCircle,
   Stethoscope,
+  Clock3,
+  CalendarClock,
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
@@ -104,211 +106,469 @@ const ADashboard = () => {
   }
 
   return (
-    <div className="min-h-screen mt-24 max-w-7xl mx-auto bg-gray-100 p-6">
-      {/* Heading */}
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        Doctor Dashboard
-      </h1>
+  <div className="min-h-screen bg-slate-50 pt-24 pb-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
-      {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 mb-8">
-        <div className="bg-white shadow rounded-xl p-5">
-          <h3 className="text-gray-500">Total Appointments</h3>
-          <p className="text-3xl font-bold text-blue-600">
-            {data?.totalAppointments}
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+        <div>
+          <p className="text-sm font-medium text-blue-600">
+            Doctor Portal
+          </p>
+
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+            Dashboard
+          </h1>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Monitor appointments, patients, and your practice activity.
           </p>
         </div>
 
-        <div className="bg-white shadow rounded-xl p-5">
-          <h3 className="text-gray-500">Total Patients</h3>
-          <p className="text-3xl font-bold text-green-600">
-            {data?.totalPatients}
-          </p>
-        </div>
-
-        <div className="bg-white shadow rounded-xl p-5">
-          <h3 className="text-gray-500">Today's Appointments</h3>
-          <p className="text-3xl font-bold text-purple-600">
-            {data?.todayAppointments}
-          </p>
-        </div>
-
-        <div className="bg-white shadow rounded-xl p-5">
-          <h3 className="text-gray-500">Upcoming</h3>
-          <p className="text-3xl font-bold text-orange-600">
-            {data?.upcomingAppointments}
-          </p>
-        </div>
-
-        <div className="bg-white shadow rounded-xl p-5">
-          <h3 className="text-gray-500">Pending</h3>
-          <p className="text-3xl font-bold text-red-500">
-            {data?.statusCount?.pending}
-          </p>
+        <div className="text-sm text-slate-400">
+          Overview
         </div>
       </div>
 
-      {/* Status Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
-        <div className="bg-yellow-100 rounded-lg p-4">
-          <h4 className="font-semibold">Pending</h4>
-          <p className="text-2xl">{data?.statusCount?.pending}</p>
+      {/* ================= MAIN STATS ================= */}
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+
+        {/* Total Appointments */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-blue-200 hover:shadow-sm transition">
+          <div className="flex items-center justify-between">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50">
+              <CalendarDays className="h-4 w-4 text-blue-600" />
+            </div>
+
+            <span className="text-xs text-slate-400">
+              Total
+            </span>
+          </div>
+
+          <p className="mt-5 text-2xl font-bold text-slate-900">
+            {data?.totalAppointments ?? 0}
+          </p>
+
+          <p className="mt-1 text-xs text-slate-500">
+            Appointments
+          </p>
         </div>
 
-        <div className="bg-green-100 rounded-lg p-4">
-          <h4 className="font-semibold">Approved</h4>
-          <p className="text-2xl">{data?.statusCount?.approved}</p>
+        {/* Patients */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-emerald-200 hover:shadow-sm transition">
+          <div className="flex items-center justify-between">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50">
+              <Users className="h-4 w-4 text-emerald-600" />
+            </div>
+
+            <span className="text-xs text-slate-400">
+              Total
+            </span>
+          </div>
+
+          <p className="mt-5 text-2xl font-bold text-slate-900">
+            {data?.totalPatients ?? 0}
+          </p>
+
+          <p className="mt-1 text-xs text-slate-500">
+            Patients
+          </p>
         </div>
 
-        <div className="bg-red-100 rounded-lg p-4">
-          <h4 className="font-semibold">Cancelled</h4>
-          <p className="text-2xl">{data?.statusCount?.cancelled}</p>
+        {/* Today */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-violet-200 hover:shadow-sm transition">
+          <div className="flex items-center justify-between">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-50">
+              <Clock3 className="h-4 w-4 text-violet-600" />
+            </div>
+
+            <span className="text-xs text-slate-400">
+              Today
+            </span>
+          </div>
+
+          <p className="mt-5 text-2xl font-bold text-slate-900">
+            {data?.todayAppointments ?? 0}
+          </p>
+
+          <p className="mt-1 text-xs text-slate-500">
+            Appointments
+          </p>
         </div>
 
-        <div className="bg-blue-100 rounded-lg p-4">
-          <h4 className="font-semibold">Completed</h4>
-          <p className="text-2xl">{data?.statusCount?.completed}</p>
+        {/* Upcoming */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-amber-200 hover:shadow-sm transition">
+          <div className="flex items-center justify-between">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50">
+              <CalendarClock className="h-4 w-4 text-amber-600" />
+            </div>
+
+            <span className="text-xs text-slate-400">
+              Scheduled
+            </span>
+          </div>
+
+          <p className="mt-5 text-2xl font-bold text-slate-900">
+            {data?.upcomingAppointments ?? 0}
+          </p>
+
+          <p className="mt-1 text-xs text-slate-500">
+            Upcoming
+          </p>
         </div>
+
+        {/* Pending */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-orange-200 hover:shadow-sm transition">
+          <div className="flex items-center justify-between">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50">
+              <Clock4 className="h-4 w-4 text-orange-600" />
+            </div>
+
+            <span className="text-xs text-slate-400">
+              Action needed
+            </span>
+          </div>
+
+          <p className="mt-5 text-2xl font-bold text-slate-900">
+            {data?.statusCount?.pending ?? 0}
+          </p>
+
+          <p className="mt-1 text-xs text-slate-500">
+            Pending
+          </p>
+        </div>
+
       </div>
 
-      {/* Patients Table */}
-     <div className="rounded-3xl bg-white shadow-xl overflow-hidden border border-slate-200">
+      {/* ================= STATUS OVERVIEW ================= */}
+      <div className="rounded-2xl border border-slate-200 bg-white mb-8">
 
-        <div className="flex items-center justify-between px-8 py-6 border-b">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4 border-b border-slate-100">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">
-              Recent Patients
+            <h2 className="text-sm font-semibold text-slate-900">
+              Appointment status
             </h2>
-            <p className="text-slate-500 text-sm">
-              Latest appointment records
+
+            <p className="text-xs text-slate-500 mt-1">
+              Current appointment distribution
             </p>
           </div>
         </div>
 
+        <div className="grid grid-cols-2 md:grid-cols-4">
+
+          {/* Pending */}
+          <div className="flex items-center gap-3 p-5 border-b md:border-b-0 md:border-r border-slate-100">
+            <div className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+
+            <div>
+              <p className="text-xs text-slate-500">
+                Pending
+              </p>
+
+              <p className="mt-0.5 text-lg font-bold text-slate-900">
+                {data?.statusCount?.pending ?? 0}
+              </p>
+            </div>
+          </div>
+
+          {/* Approved */}
+          <div className="flex items-center gap-3 p-5 border-b md:border-b-0 md:border-r border-slate-100">
+            <div className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+
+            <div>
+              <p className="text-xs text-slate-500">
+                Approved
+              </p>
+
+              <p className="mt-0.5 text-lg font-bold text-slate-900">
+                {data?.statusCount?.approved ?? 0}
+              </p>
+            </div>
+          </div>
+
+          {/* Completed */}
+          <div className="flex items-center gap-3 p-5 border-b md:border-b-0 md:border-r border-slate-100">
+            <div className="h-2.5 w-2.5 rounded-full bg-blue-500" />
+
+            <div>
+              <p className="text-xs text-slate-500">
+                Completed
+              </p>
+
+              <p className="mt-0.5 text-lg font-bold text-slate-900">
+                {data?.statusCount?.completed ?? 0}
+              </p>
+            </div>
+          </div>
+
+          {/* Cancelled */}
+          <div className="flex items-center gap-3 p-5">
+            <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
+
+            <div>
+              <p className="text-xs text-slate-500">
+                Cancelled
+              </p>
+
+              <p className="mt-0.5 text-lg font-bold text-slate-900">
+                {data?.statusCount?.cancelled ?? 0}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* ================= PATIENTS ================= */}
+      <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+
+        {/* Table Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 sm:px-6 py-5 border-b border-slate-100">
+
+          <div>
+            <h2 className="text-lg font-semibold text-slate-900">
+              Recent patients
+            </h2>
+
+            <p className="text-xs text-slate-500 mt-1">
+              Latest appointment records and patient information.
+            </p>
+          </div>
+
+          <div className="inline-flex items-center gap-2 self-start sm:self-auto rounded-lg bg-slate-50 border border-slate-200 px-3 py-2">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
+
+            <span className="text-xs font-medium text-slate-600">
+              {patients?.length ?? 0} records
+            </span>
+          </div>
+
+        </div>
+
+        {/* Table */}
         <div className="overflow-x-auto">
 
           <table className="min-w-full">
 
-            <thead className="bg-slate-100">
-              <tr className="text-left text-slate-600 text-sm">
-                <th className="px-6 py-4">Patient</th>
-                <th className="px-6 py-4">Age</th>
-                <th className="px-6 py-4">Gender</th>
-                <th className="px-6 py-4">Phone</th>
-                <th className="px-6 py-4">Appointment</th>
-                <th className="px-6 py-4">Slot</th>
-                <th className="px-6 py-4">Reason</th>
-                <th className="px-6 py-4">Status</th>
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50/70 text-left">
+
+                <th className="px-6 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Patient
+                </th>
+
+                <th className="px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Age
+                </th>
+
+                <th className="px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Gender
+                </th>
+
+                <th className="px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Phone
+                </th>
+
+                <th className="px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Appointment
+                </th>
+
+                <th className="px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Slot
+                </th>
+
+                <th className="px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Reason
+                </th>
+
+                <th className="px-6 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Status
+                </th>
+
               </tr>
             </thead>
 
-            <tbody>
+            <tbody className="divide-y divide-slate-100">
 
               {patients?.length > 0 ? (
-                patients.map((item) => (
-                  <tr
-                    key={item._id}
-                    className="border-b hover:bg-slate-50 transition"
-                  >
+                patients.map((item) => {
 
-                    <td className="px-6 py-5">
+                  const patientName =
+                    item.patientDetails?.name ||
+                    item.patient?.name ||
+                    "Unknown Patient";
 
-                      <div className="flex items-center gap-4">
+                  const patientEmail =
+                    item.patient?.email ||
+                    item.patientDetails?.email ||
+                    "No email";
 
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
-                          {(item.patientDetails?.name ||
-                            item.patient?.name)?.charAt(0)}
+                  return (
+                    <tr
+                      key={item._id}
+                      className="group hover:bg-slate-50/70 transition-colors"
+                    >
+
+                      {/* Patient */}
+                      <td className="px-6 py-4">
+
+                        <div className="flex items-center gap-3 min-w-[220px]">
+
+                          <div className="h-10 w-10 shrink-0 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-semibold text-sm">
+                            {patientName
+                              .charAt(0)
+                              .toUpperCase()}
+                          </div>
+
+                          <div className="min-w-0">
+
+                            <p className="font-medium text-sm text-slate-800 truncate">
+                              {patientName}
+                            </p>
+
+                            <p className="text-xs text-slate-400 truncate mt-0.5">
+                              {patientEmail}
+                            </p>
+
+                          </div>
+
                         </div>
 
-                        <div>
-                          <p className="font-semibold text-slate-800">
-                            {item.patientDetails?.name || item.patient?.name}
-                          </p>
+                      </td>
 
-                          <p className="text-sm text-slate-500">
-                            {item.patient?.email ||
-                              item.patientDetails?.email}
-                          </p>
-                        </div>
+                      {/* Age */}
+                      <td className="px-5 py-4">
+                        <span className="text-sm text-slate-600">
+                          {item.patientDetails?.age || "—"}
+                        </span>
+                      </td>
 
-                      </div>
+                      {/* Gender */}
+                      <td className="px-5 py-4">
+                        <span className="text-sm text-slate-600 capitalize">
+                          {item.patientDetails?.gender || "—"}
+                        </span>
+                      </td>
 
-                    </td>
+                      {/* Phone */}
+                      <td className="px-5 py-4">
+                        <span className="text-sm text-slate-600 whitespace-nowrap">
+                          {item.patientDetails?.phone || "—"}
+                        </span>
+                      </td>
 
-                    <td className="px-6 py-5">
-                      {item.patientDetails?.age}
-                    </td>
+                      {/* Date */}
+                      <td className="px-5 py-4">
+                        <span className="text-sm text-slate-600 whitespace-nowrap">
+                          {item.appointmentDate
+                            ? new Date(
+                                item.appointmentDate
+                              ).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })
+                            : "—"}
+                        </span>
+                      </td>
 
-                    <td className="px-6 py-5">
-                      {item.patientDetails?.gender}
-                    </td>
+                      {/* Slot */}
+                      <td className="px-5 py-4">
+                        <span className="inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 whitespace-nowrap">
+                          {item.slot || "—"}
+                        </span>
+                      </td>
 
-                    <td className="px-6 py-5">
-                      {item.patientDetails?.phone}
-                    </td>
+                      {/* Reason */}
+                      <td className="px-5 py-4 max-w-[220px]">
+                        <p
+                          className="text-sm text-slate-600 truncate"
+                          title={item.reason}
+                        >
+                          {item.reason || "—"}
+                        </p>
+                      </td>
 
-                    <td className="px-6 py-5">
-                      {new Date(
-                        item.appointmentDate
-                      ).toLocaleDateString()}
-                    </td>
+                      {/* Status */}
+                      <td className="px-6 py-4">
 
-                    <td className="px-6 py-5">
-                      {item.slot}
-                    </td>
+                        <select
+                          value={item.status}
+                          onChange={(e) =>
+                            updateStatus(
+                              item._id,
+                              e.target.value
+                            )
+                          }
+                          className={`
+                            appearance-none rounded-lg border-0
+                            px-3 py-1.5 pr-8 text-xs font-semibold
+                            cursor-pointer outline-none
+                            focus:ring-2 focus:ring-blue-100
+                            ${
+                              item.status === "approved"
+                                ? "bg-emerald-50 text-emerald-700"
+                                : item.status === "pending"
+                                ? "bg-amber-50 text-amber-700"
+                                : item.status === "completed"
+                                ? "bg-blue-50 text-blue-700"
+                                : "bg-red-50 text-red-700"
+                            }
+                          `}
+                        >
+                          <option value="pending">
+                            Pending
+                          </option>
 
-                    <td className="px-6 py-5">
-                      {item.reason}
-                    </td>
+                          <option value="approved">
+                            Approved
+                          </option>
 
-                    <td className="px-6 py-5">
+                          <option value="completed">
+                            Completed
+                          </option>
 
-                      <select
-                        value={item.status}
-                        onChange={(e) =>
-                          updateStatus(item._id, e.target.value)
-                        }
-                        className={`rounded-xl px-4 py-2 border-0 font-semibold shadow-sm
-                        ${
-                          item.status === "approved"
-                            ? "bg-green-100 text-green-700"
-                            : item.status === "pending"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : item.status === "completed"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
+                          <option value="cancelled">
+                            Cancelled
+                          </option>
+                        </select>
 
-                    </td>
+                      </td>
 
-                  </tr>
-                ))
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
                   <td
                     colSpan="8"
-                    className="py-16 text-center text-slate-500"
+                    className="px-6 py-16 text-center"
                   >
-                    No Patients Found
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
+                      <Users className="h-5 w-5 text-slate-400" />
+                    </div>
+
+                    <p className="mt-4 text-sm font-medium text-slate-700">
+                      No patients found
+                    </p>
+
+                    <p className="mt-1 text-xs text-slate-400">
+                      Patient appointments will appear here.
+                    </p>
                   </td>
                 </tr>
               )}
 
             </tbody>
-
           </table>
 
         </div>
-
       </div>
 
     </div>
+  </div>
 );
+
 }
 export default ADashboard;

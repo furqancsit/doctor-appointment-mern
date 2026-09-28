@@ -2,8 +2,6 @@ import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
-import { registerUser, loginUser, getUserProfile } from "./controllers/user.controller.js";
-
 import userRouter from "./routes/user.route.js"
 import doctorRouter from "./routes/doctor.route.js"
 import appointmentRouter from "./routes/appointment.route.js"

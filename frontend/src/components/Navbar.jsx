@@ -37,9 +37,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "PPPPPPPP", href: "/doctor/appointment" },
     { name: "Doctors", href: "/doctors" },
     { name: "Services", href: "/services" },
+
     ...(user ? [{ name: "Appointments", href: "/my-appointment" }] : []),
     {
       ...(user?.role === "admin" && { name: "Create Doctor", href: "/create" }),

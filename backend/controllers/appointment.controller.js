@@ -259,6 +259,12 @@ export const updateAppointmentStatus = async (req, res) => {
         message: "Appointment already cancelled",
       });
     }
+    if (appointment.status === "approved") {
+      return res.status(400).json({
+        success: false,
+        message: "Appointment already approved you cant cancell",
+      });
+    }
 
     // ❌ Prevent cancelling completed appointments (optional but good)
     if (appointment.status === "completed") {
